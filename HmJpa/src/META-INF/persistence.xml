@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="HmJpa" transaction-type="JTA">		
+		<jta-data-source>java:jboss/datasources/MysqlDS</jta-data-source>
+
+		<class>tw.housemart.jpa.Good</class>
+		<class>tw.housemart.jpa.RolePermission</class>
+		<class>tw.housemart.jpa.RolePermissionPK</class>
+		<class>tw.housemart.jpa.Role</class>
+		<class>tw.housemart.jpa.User</class>
+		<class>tw.housemart.jpa.Community</class>
+		<class>tw.housemart.jpa.DeliverLocation</class>
+		<class>tw.housemart.jpa.Orders</class>
+		<class>tw.housemart.jpa.OrderDetail</class>
+		<class>tw.housemart.jpa.Category</class>
+		<class>tw.housemart.jpa.Advertise</class>
+		<class>tw.housemart.jpa.Explain</class>
+		<class>tw.housemart.jpa.Goodstype</class>
+		<class>tw.housemart.jpa.Announcement</class>
+		<class>tw.housemart.jpa.Approperty</class>
+		<class>tw.housemart.jpa.Classification</class>
+		<class>tw.housemart.jpa.Supplier</class>
+		<class>tw.housemart.jpa.Goodsgroup</class>
+		<class>tw.housemart.jpa.Advertisement</class>
+		<class>tw.housemart.jpa.Banner</class>
+		<class>tw.housemart.jpa.BannerPK</class>
+		<class>tw.housemart.jpa.Linux</class>
+		<class>tw.housemart.jpa.PersonalGood</class>
+		<class>tw.housemart.jpa.PersonalGoodPK</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+		<properties>
+		<!--
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+		-->
+		</properties>
+	</persistence-unit>
+</persistence>

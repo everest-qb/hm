@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">
+		<h:form>
+		<rich:dataTable value="#{manageOrders.status}" var="s" style="width:900">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="編號"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="客戶"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="電話"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="送貨地點"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="送單時間"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="下一步"></h:outputText>
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:column colspan="6">
+				<rich:collapsibleSubTableToggler for="orderTableId" />
+				<h:outputText value="#{gmsg[globalVars1.findOrderStatusMap(s)]}"></h:outputText>
+				(
+				<h:outputText value="#{manageOrders.findOrderByStatus(s).size()}"></h:outputText>)
+			</rich:column>
+				
+				<rich:collapsibleSubTable  id="orderTableId" value="#{manageOrders.findOrderByStatus(s)}" var="o" 
+				expanded="#{s==manageOrders.location}">
+			        <rich:column>
+						<h:outputText value="#{o.id}"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{o.userName}"></h:outputText>
+						
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{o.tel}"></h:outputText>
+						<h:outputText value="#{manageOrders.findUser(o.userName).tel}" rendered="#{o.userName.length()>0}"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{o.deliverLocation.community.name}"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{o.createT}">
+							<f:convertDateTime type="both" dateStyle="full" timeZone="Asia/Taipei"></f:convertDateTime>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<a4j:commandButton value="聯繫" rendered="#{s==0}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="50"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						<a4j:commandButton value="買家取消" rendered="#{s==0}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="-110"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						
+						<a4j:commandButton value="送貨" rendered="#{s==50}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="100"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						<a4j:commandButton value="買家取消" rendered="#{s==50}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="-110"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						<a4j:commandButton value="店家取消" rendered="#{s==50}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="-110"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						
+						<a4j:commandButton value="付款" rendered="#{s==100}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="127"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						<a4j:commandButton value="減量付款" rendered="#{s==100}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="127"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						<a4j:commandButton value="買家取消" rendered="#{s==100}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="-110"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						<a4j:commandButton value="店家取消" rendered="#{s==100}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="-110"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						
+						<a4j:commandButton value="退貨" rendered="#{s>=126}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="-110"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+						<a4j:commandButton value="瑕疵更換" rendered="#{s>=126}" execute="@form" render="@form">
+								<a4j:param assignTo="#{manageOrders.orderId}" value="#{o.id}"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.changeStatus}" value="127"></a4j:param>
+								<a4j:param assignTo="#{manageOrders.location}" value="#{s}"></a4j:param>
+								<a4j:actionListener listener="#{manageOrders.toAction}"></a4j:actionListener>
+						</a4j:commandButton>
+					</rich:column>
+				<f:facet name="footer"></f:facet>
+			</rich:collapsibleSubTable>
+			
+		</rich:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

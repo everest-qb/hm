@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="304,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
+   PATH="/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="toGoods::#jsf#main.xhtml" NAME="output"
+    PATH="/jsf/main.xhtml" TARGET="rules:#jsf#main.xhtml"
+    TITLE="toGoods" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#jsf#main.xhtml" PATH="/jsf/main.xhtml"
+  SHAPE="576,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#jsf#main.xhtml:0" NAME="item"
+   PATH="/jsf/main.xhtml" model-entity="JSFProcessItem"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#jsf#shoppingCarManager.xhtml"
+  PATH="/jsf/shoppingCarManager.xhtml" SHAPE="304,529,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#jsf#shoppingCarManager.xhtml:0" NAME="item"
+   PATH="/jsf/shoppingCarManager.xhtml" model-entity="JSFProcessItem"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success:#{login.check()}:#jsf#main.xhtml"
+    NAME="output" PATH="/jsf/main.xhtml" TARGET="rules:#jsf#main.xhtml"
+    TITLE="#{login.check()}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="managerCar::#jsf#shoppingCarManager.xhtml"
+    NAME="output1" PATH="/jsf/shoppingCarManager.xhtml"
+    TARGET="rules:#jsf#shoppingCarManager.xhtml" TITLE="managerCar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="toMain::#jsf#main.xhtml" NAME="output2"
+    PATH="/jsf/main.xhtml" TARGET="rules:#jsf#main.xhtml" TITLE="toMain" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="login::#index.xhtml" NAME="output4"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="orderManage::#jsf#orderManage.xhtml"
+    NAME="output5" PATH="/jsf/orderManage.xhtml"
+    TARGET="rules:#jsf#orderManage.xhtml" TITLE="orderManage" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="memberManage::#jsf#member.xhtml"
+    NAME="output3" PATH="/jsf/member.xhtml"
+    TARGET="rules:#jsf#member.xhtml" TITLE="memberManage" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="register::#jsf#register.xhtml"
+    NAME="output6" PATH="/jsf/register.xhtml"
+    TARGET="rules:#jsf#register.xhtml" TITLE="register" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="register:#{login.check()}:#jsf#register.xhtml" NAME="output7"
+    PATH="/jsf/register.xhtml" TARGET="rules:#jsf#register.xhtml"
+    TITLE="#{login.check()}:register" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="about::#jsf#about.xhtml" NAME="output8"
+    PATH="/jsf/about.xhtml" TARGET="rules:#jsf#about.xhtml"
+    TITLE="about" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="contact::#jsf#contact.xhtml" NAME="output9"
+    PATH="/jsf/contact.xhtml" TARGET="rules:#jsf#contact.xhtml"
+    TITLE="contact" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#jsf#contact.xhtml" PATH="/jsf/contact.xhtml"
+  SHAPE="304,1089,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#jsf#contact.xhtml:0" NAME="item"
+   PATH="/jsf/contact.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="sendMailReturn:#{contact.toSendMail()}:#jsf#contact.xhtml"
+    NAME="output" PATH="/jsf/contact.xhtml"
+    TARGET="rules:#jsf#contact.xhtml"
+    TITLE="#{contact.toSendMail()}:sendMailReturn" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#jsf#about.xhtml" PATH="/jsf/about.xhtml"
+  SHAPE="304,977,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#jsf#register.xhtml"
+  PATH="/jsf/register.xhtml" SHAPE="304,865,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#jsf#orderManage.xhtml"
+  PATH="/jsf/orderManage.xhtml" SHAPE="304,753,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#jsf#personalList.xhtml"
+  PATH="/jsf/personalList.xhtml" SHAPE="304,433,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#jsf#member.xhtml" PATH="/jsf/member.xhtml"
+  SHAPE="304,433,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#jsf#member.xhtml:0" NAME="item"
+   PATH="/jsf/member.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="returnChange:#{member.toChange()}:#jsf#member.xhtml"
+    NAME="output" PATH="/jsf/member.xhtml"
+    TARGET="rules:#jsf#member.xhtml"
+    TITLE="#{member.toChange()}:returnChange" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

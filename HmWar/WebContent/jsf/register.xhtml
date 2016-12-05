@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">
+		<h:outputScript library="js" target="head" name="register.js"></h:outputScript>
+		<table width="100%" align="center">
+			<tr>
+				<td><rich:panel header="#{gmsg['register.header.clause']}">
+						<rich:list
+							value="#{globalVars.findExplainByType('register.clause')}"
+							var="explain" type="ordered">
+							<h:outputText value="#{gmsg[explain]}"></h:outputText>
+						</rich:list>
+					</rich:panel></td>
+				<td width="50%"><table width="100%" align="center">
+						<tr>
+							<td><h:form>
+									<rich:panel>
+										<f:facet name="header">
+											<h:outputText value="#{gmsg['register.weelcome']}"></h:outputText>
+										</f:facet>
+										<table width="100%">
+											<tr>
+												<td><h:outputLabel value="#{gmsg['register.name']}"></h:outputLabel></td>
+												<td><h:inputText id="nameId" readonly="true"
+														label="#{gmsg['register.name']}" required="true"
+														value="#{register.name}">
+														<ui:remove>
+														<a4j:ajax event="change" render="duplicateMsgId"
+															listener="#{register.checkDuplicateName()}">
+														</a4j:ajax>
+														</ui:remove>
+														<f:validateLength maximum="50" minimum="6"></f:validateLength>
+														<rich:validator></rich:validator>
+													</h:inputText></td>
+												<td rowspan="7" width="50%"><a4j:outputPanel
+														id="duplicateMsgId">&nbsp;<h:outputText
+															rendered="#{register.nameDuplicate}"
+															value="#{gmsg['register.error.name.duplicate']}"
+															style="color:red;font-weight: bold"></h:outputText>
+													</a4j:outputPanel> <rich:messages ajaxRendered="true"></rich:messages></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel value="#{gmsg['register.password']}"></h:outputLabel></td>
+												<td><h:inputSecret id="passwordId" required="true"
+														validatorMessage="#{gmsg['register.error.password']}"
+														label="#{gmsg['register.password']}"
+														value="#{register.password}">
+														<f:validateRegex
+															pattern="((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=[\S]+$).{8,15})"></f:validateRegex>
+														<rich:validator></rich:validator>
+													</h:inputSecret></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel value="#{gmsg['register.confirm']}"></h:outputLabel></td>
+												<td><h:inputSecret id="confirmId" required="true"
+														onchange="confirmPwd(#{rich:element('passwordId')},#{rich:element('confirmId')},#{rich:element('xoId')})"
+														label="#{gmsg['register.confirm']}">
+
+													</h:inputSecret>&nbsp; <h:outputText id="xoId" value="X"
+														style="color:red;font-size:large"></h:outputText></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel value="#{gmsg['register.tel']}"></h:outputLabel></td>
+												<td><h:inputText value="#{register.tel}"
+														label="#{gmsg['register.tel']}"
+														validatorMessage="#{gmsg['register.error.tel']}">
+														<f:validateRegex pattern="[0-9]{10}"></f:validateRegex>
+														<rich:validator></rich:validator>
+													</h:inputText></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel value="#{gmsg['register.mail']}"></h:outputLabel></td>
+												<td><h:inputText value="#{register.mail}"
+														label="#{gmsg['register.mail']}"
+														validatorMessage="#{gmsg['register.error.mail']}">
+														<f:validateRegex
+															pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$|^$"></f:validateRegex>
+														<rich:validator />
+													</h:inputText></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel
+														value="#{gmsg['register.community']}"></h:outputLabel></td>
+												<td><rich:autocomplete required="true"
+														value="#{register.communityName}" minChars="2"
+														label="#{gmsg['register.community']}" mode="cachedAjax"
+														autocompleteMethod="#{register.findAutocompleteCommunity}">
+														<a4j:ajax event="selectitem" render="addressId"
+															execute="@this" listener="#{register.guestAddress()}"></a4j:ajax>
+														<f:validateLength maximum="50" minimum="4"></f:validateLength>
+														<rich:validator></rich:validator>
+													</rich:autocomplete></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel value="#{gmsg['register.address']}"></h:outputLabel></td>
+												<td><rich:autocomplete id="addressId" required="true"
+														label="#{gmsg['register.address']}"
+														value="#{register.address}">
+														<f:validateLength maximum="50" minimum="6"></f:validateLength>
+														<rich:validator></rich:validator>
+													</rich:autocomplete></td>
+											</tr>
+											<tr>
+												<td colspan="2" align="right"><a4j:commandButton
+														value="#{gmsg['register.enter']}"
+														action="#{register.toRegister()}"></a4j:commandButton></td>
+												<td>&nbsp;&nbsp;</td>
+											</tr>
+										</table>
+									</rich:panel>
+								</h:form></td>
+						</tr>
+					</table></td>
+				<td><rich:panel header="#{gmsg['register.header.explain']}">
+					<rich:list
+							value="#{globalVars.findExplainByType('register.explain')}"
+							var="explain" type="ordered">
+							<h:outputText value="#{gmsg[explain]}"></h:outputText>
+						</rich:list>
+					</rich:panel></td>
+			</tr>
+		</table>
+	</ui:define>
+</ui:composition>
+</html>

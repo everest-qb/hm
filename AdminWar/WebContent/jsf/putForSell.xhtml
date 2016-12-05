@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">
+	<h:outputStylesheet>
+     .MarcxSelectStyle input{
+       width: 80px;
+     }
+</h:outputStylesheet>
+		<h:form>
+			<table width="100%" align="center">
+				<tr>
+					<td><rich:accordion switchType="client">
+							<rich:accordionItem header="上架管理">
+								<table width="60%" align="center">
+									<tr>
+										<td><a4j:region>
+												<rich:panel id="mcPanelId">
+													<f:facet name="header">
+														<h:outputText value="上下架"></h:outputText>
+													</f:facet>
+													<table width="100%" align="center" >												
+														<tr>
+														<td><h:outputLabel value="分類"></h:outputLabel> 
+														<table cellpadding="0" cellspacing="0"><tr><td>
+													
+													<rich:select value="#{manageCategory1.goodsgroupId}" required="false">
+													 <f:selectItems value="#{manageCategory1.findAllGoodsGroup()}" var="c" itemLabel="#{c.twname}" itemValue="#{c.id}">													 
+													 </f:selectItems>													 
+														<a4j:ajax event="selectitem" render="goodstypeSelectId" execute="@this" />																			
+													</rich:select>	
+																										
+													<rich:select id="goodstypeSelectId" value="#{manageCategory1.goodstypeId}">
+													 <f:selectItems value="#{manageCategory1.select.typeList}" var="c" itemLabel="#{c.twname}" itemValue="#{c.id}">													 
+													 </f:selectItems>													
+													</rich:select>
+													
+													<rich:select id="classifySelectId" value="#{manageCategory1.classficationId}" required="true">
+													 <f:selectItems value="#{manageCategory1.findAllClassification()}" var="c" 
+													 itemLabel="#{c.twname}" itemValue="#{c.id}">													 
+													 </f:selectItems>
+													</rich:select>	
+													</td></tr></table>
+														</td>														
+															<td><h:outputLabel value="貨號" for="sellGoodsId"></h:outputLabel>
+																<rich:autocomplete id="sellGoodsId" mode="cachedAjax" 
+																	minChars="3" var="#{manageCategory1.goodsId}" value="#{manageCategory1.goodsId}"
+																	autocompleteMethod="#{manageCategory1.findAutoGoodsId}" onselectitem="loadGoodsImg03();"></rich:autocomplete></td>
+															<td rowspan="2" width="100">
+															<a4j:outputPanel
+																id="gImage03">
+																<table width="100%" cellpadding="0" cellspacing="0"><tr><td>
+																<img height="100" width="100"
+																	src="#{manageCategory1.good.icon}" />
+																</td>
+																			<ui:remove>
+																			<td>
+																<table cellpadding="0" cellspacing="0">
+																<tr>
+																<td><h:outputText value="#{manageCategory1.good.name}"></h:outputText></td>
+																</tr>
+																<tr>
+																<td><h:outputText value="#{manageCategory1.good.price}"></h:outputText></td>
+																</tr>
+																<tr>
+																<td><h:outputText value="#{manageCategory1.good.desc}" escape="false"></h:outputText></td>
+																</tr>
+																</table>
+																</td>
+																</ui:remove>
+																</tr></table>	
+															</a4j:outputPanel> <a4j:jsFunction action="#{manageCategory1.loadmage()}"
+																name="loadGoodsImg03" execute="sellGoodsId" render="gImage03">
+															</a4j:jsFunction>
+															</td>
+														</tr>
+														<tr>
+															<td align="right"><a4j:commandButton  
+																	action="#{manageCategory1.addMap()}" value="上架"
+																	execute="@region" render="mcPanelId"></a4j:commandButton>
+															</td>
+															<td><a4j:commandButton
+																	action="#{manageCategory1.delMap()}" value="下架"
+																	execute="@region" render="mcPanelId"></a4j:commandButton></td>
+														</tr>
+													</table>
+												</rich:panel>
+											</a4j:region></td>
+									</tr>
+								</table>
+							</rich:accordionItem>
+							
+							<rich:accordionItem header="類别管理">
+
+								<rich:tabPanel switchType="client" id="classManageTabPanelId">								
+									<rich:tab header="新增">
+									<a4j:region>
+											<rich:panel>
+							<table height="200">							
+							<tr>
+							<td><h:outputLabel value="分類" /><rich:select id="selectKindId" value="#{toClass1.selectKind}" onselectitem="changekind()">
+									<f:selectItem itemLabel="GROUP" itemValue="group"></f:selectItem>									
+									<f:selectItem itemLabel="TYPE" itemValue="type"></f:selectItem>
+									<f:selectItem itemLabel="CLASSIFICATION" itemValue="classification"></f:selectItem>
+								</rich:select>
+								</td>
+							<td><h:outputLabel value="ID" /><h:inputText id="classId" value="#{toClass1.id}" />
+							<rich:select styleClass="MarcxSelectStyle" id="selectcId" onselectitem="#{rich:element('classId')}.value=#{rich:component('selectcId')}.getValue()" 
+							  rendered="#{toClass1.selectKind.equals('type')}">
+									<f:selectItems value="#{toClass1.findAllGoodsGroup()}" var="g" 
+									itemLabel="#{g.twname}" itemValue="#{g.id}"></f:selectItems>
+							</rich:select>							
+							</td>
+							<td><h:outputLabel value="中文(台灣)" /><h:inputText value="#{toClass1.twName}" /></td>
+							<td><h:outputLabel value="中文(大陸)" /><h:inputText value="#{toClass1.cnName}" /></td>
+							<td><h:outputLabel value="英文" /><h:inputText value="#{toClass.usName}" /></td>
+							<td><a4j:commandButton action="#{toClass1.addNew()}" value="新增" execute="@region" render="classManageTabPanelId"></a4j:commandButton></td>
+							</tr>												
+							</table>
+											</rich:panel>
+											<a4j:jsFunction name="changekind" execute="@region" render="classManageTabPanelId"></a4j:jsFunction>
+										</a4j:region>
+									</rich:tab>
+									
+									<rich:tab header="修改">
+									<a4j:region>
+									 <rich:panel id="classManageTabModifyPanelId">
+									 <table><tr>
+									 <td>
+									 <h:outputLabel value="分類" />
+									 <rich:select id="selectKind2Id" value="#{toClass1.sUtil.groupSelectForModify}" required="true">
+									<f:selectItem itemLabel="GROUP" itemValue="group"></f:selectItem>									
+									<f:selectItem itemLabel="TYPE" itemValue="type"></f:selectItem>
+									<f:selectItem itemLabel="CLASSIFICATION" itemValue="classification"></f:selectItem>
+											<a4j:ajax event="change" execute="selectKind2Id" render="classManageTabModifyPanelId"></a4j:ajax>
+									</rich:select>	
+									</td>																	
+									 <td>
+									  <h:outputLabel value="ID" />
+									  <rich:autocomplete onselectitem="searchItem()"  minChars="1" autocompleteMethod="#{toClass1.findAutoccompleteId}"
+									   rendered="#{toClass1.selectKind.length()>0}" value="#{toClass1.id}" required="true"></rich:autocomplete>
+									 </td>
+									 <td><h:outputLabel value="中文(台灣)" /><h:inputText value="#{toClass1.twName}"  /></td>
+							         <td><h:outputLabel value="中文(大陸)" /><h:inputText value="#{toClass1.cnName}" /></td>
+							         <td><h:outputLabel value="英文" /><h:inputText value="#{toClass1.usName}" /></td>
+							         <td><a4j:commandButton action="#{toClass1.updateKind()}" value="修改" execute="@region" render="classManageTabModifyPanelId"></a4j:commandButton> </td>
+							         </tr></table>									 
+									 </rich:panel>
+											<a4j:jsFunction action="#{toClass1.SearchItemByIdOfKind()}" name="searchItem" execute="@region" render="classManageTabModifyPanelId"></a4j:jsFunction>
+										</a4j:region>
+									</rich:tab>																
+								</rich:tabPanel>								
+							</rich:accordionItem>
+
+							<rich:accordionItem header="首頁廣告管理">
+								<rich:tabPanel switchType="client">
+									<rich:tab header="新增">
+										<a4j:region>
+											<rich:panel>
+												<table width="100%">
+													<tr>
+														<td><h:outputLabel value="廣告" for="ad1"></h:outputLabel>														
+															<rich:select id="ad1" value="#{manageList1.advertise.id}">
+																<f:selectItems value="#{advertisement1.advertisememtList}" var="ad" 
+																itemLabel="#{ad.twname}" itemValue="#{ad.id}"></f:selectItems>
+																<ui:remove>
+																<f:selectItem itemLabel="#{gmsg['index.advertise.top']}"
+																	itemValue="Top"></f:selectItem>
+																<f:selectItem
+																	itemLabel="#{gmsg['index.advertise.bargin']}"
+																	itemValue="Bargin"></f:selectItem>
+																<f:selectItem
+																	itemLabel="#{gmsg['index.advertise.btand']}"
+																	itemValue="Brand"></f:selectItem>
+																<f:selectItem
+																	itemLabel="#{gmsg['index.advertise.quantity']}"
+																	itemValue="Quantity"></f:selectItem>
+																<f:selectItem
+																	itemLabel="#{gmsg['index.advertise.ontime']}"
+																	itemValue="Ontime"></f:selectItem>
+																<f:selectItem
+																	itemLabel="#{gmsg['index.advertise.combination']}"
+																	itemValue="Combination"></f:selectItem>
+																</ui:remove>	
+															</rich:select>															
+															</td>
+														<td><h:outputLabel value="貨號" for="ad2"></h:outputLabel>
+															<rich:autocomplete id="ad2"
+																value="#{manageList1.advertise.GId}"
+																autocompleteMethod="#{manageList1.findAutoGoodsId}"
+																mode="cachedAjax" minChars="3"
+																onselectitem="loadGoodsImg01();"></rich:autocomplete></td>
+														<td width="100" height="100" rowspan="3"><a4j:outputPanel
+																id="gImage01">
+																<img height="100" width="100"
+																	src="#{manageList1.imageSrc}" />
+															</a4j:outputPanel> <a4j:jsFunction action="#{manageList1.loadmage()}"
+																name="loadGoodsImg01" execute="ad2" render="gImage01">
+															</a4j:jsFunction></td>
+													</tr>
+													<tr>
+														<td colspan="2"><h:outputLabel value="圖示位置" for="ad3"></h:outputLabel>
+															<h:inputText id="ad3" size="150" maxlength="256"
+																value="#{manageList1.advertise.picSrc}">
+																<f:validateRequired></f:validateRequired>
+																<rich:validator></rich:validator>
+															</h:inputText></td>
+													</tr>
+													<tr align="right">
+														<td colspan="2"><a4j:commandButton
+																action="#{manageList1.addNewAdvertise()}" value="新增"
+																execute="@region" render="@region"></a4j:commandButton>
+														</td>
+													</tr>
+												</table>
+											</rich:panel>
+										</a4j:region>
+									</rich:tab>
+									<rich:tab header="變更">
+										<rich:panel id="modifyAdPanelId">
+											<table>
+												<tr align="center">
+													<td><rich:select enableManualInput="true"
+															id="advertiseId" value="#{manageList1.advertise.id}">
+															<f:selectItems
+																value="#{manageList1.findAllAdvertiseSelect()}"></f:selectItems>
+														</rich:select> <a4j:commandButton
+															action="#{manageList1.findAdvertisement()}" type="button"
+															value="查詢" execute="advertiseId" render="modifyAdPanelId"></a4j:commandButton>
+													</td>
+												</tr>
+												<tr>
+													<td><a4j:region>
+															<table width="100%">
+																<tr>
+																	<td><h:outputLabel value="廣告" for="mad1"></h:outputLabel>
+																		<h:inputText id="mad1"
+																			value="#{manageList1.advertise.id}" readonly="true"></h:inputText>
+																		<h:inputHidden id="hidenAdId"
+																			value="#{manageList1.advertise.id}">
+																			<f:validateRequired></f:validateRequired>
+																		</h:inputHidden></td>
+																	<td><h:outputLabel value="貨號" for="mad2"></h:outputLabel>
+																		<rich:autocomplete id="mad2"
+																			value="#{manageList1.advertise.GId}"
+																			autocompleteMethod="#{manageList1.findAutoGoodsId}"
+																			mode="cachedAjax" minChars="3"
+																			onselectitem="loadGoodsImg02()"></rich:autocomplete></td>
+																	<td rowspan="3"><a4j:outputPanel id="gImage02">
+																			<img height="100" width="100"
+																				src="#{manageList1.imageSrc}" />
+																		</a4j:outputPanel> <a4j:jsFunction action="#{manageList1.loadmage()}"
+																			name="loadGoodsImg02" execute="mad2"
+																			render="gImage02">
+																		</a4j:jsFunction></td>
+																</tr>
+																<tr>
+																	<td colspan="2"><h:outputLabel value="圖示位置"
+																			for="mad3"></h:outputLabel> <h:inputText id="mad3"
+																			size="150" maxlength="256"
+																			value="#{manageList1.advertise.picSrc}">
+																			<f:validateRequired></f:validateRequired>
+																			<rich:validator></rich:validator>
+																		</h:inputText></td>
+																</tr>
+																<tr align="right">
+																	<td><a4j:commandButton value="刪除"
+																			execute="hidenAdId"
+																			action="#{manageList1.delAdvertiseMent()}"
+																			render="modifyAdPanelId"></a4j:commandButton></td>
+																	<td><a4j:commandButton value="更新"
+																			execute="@region"
+																			action="#{manageList1.updateAdvertise()}"
+																			render="@region"></a4j:commandButton></td>
+																</tr>
+															</table>
+														</a4j:region></td>
+												</tr>
+											</table>
+										</rich:panel>
+
+									</rich:tab>
+								</rich:tabPanel>
+							</rich:accordionItem>
+						</rich:accordion></td>
+				</tr>
+			</table>
+			
+			<rich:notifyMessages stayTime="10000" showDetail="true" showCloseButton="true" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

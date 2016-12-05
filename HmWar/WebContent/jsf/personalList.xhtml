@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+<ui:define name="body">
+	<h:outputStylesheet>		
+		input.rf-insp-inp[type="text"] {
+		font-size:22px;
+		}
+		.rf-insp-dec, .rf-insp-inc {
+		height: 15px;
+		width: 20px;
+		}
+		.rf-pm-itm-ico {
+		width: 0px;
+		}
+		.rf-pm-itm-exp-ico {
+		width: 0px;
+		}
+		</h:outputStylesheet>
+<table align="center" width="100%"><tr><td>
+<h:form>
+<rich:tabPanel>
+<rich:tab header="#{gmsg['personallist.head.personal']}">
+	 <rich:panel style="border:0;width:100%">
+				<rich:dataGrid value="#{personalList.store}" var="obj" columns="3" style="width:100%"
+					elements="9" id="storeGridId" rowKeyVar="rVar" 
+					iterationStatusVar="isVar" stateVar="sVar">  
+						<rich:panel style="width:200 px; border:0;background-color: rgb(255, 255, 255);">
+						<f:facet name="header">
+							<h:outputText value="#{obj.title}" /> <h:outputText value="#{obj.id}"></h:outputText>
+						</f:facet>
+						<h:panelGrid columns="1">
+							<a4j:region>							
+							<a4j:commandLink render="popupId" execute="@region"
+								oncomplete="#{rich:component('popupId')}.show(); return false;">
+								<a4j:param value="#{obj.id}" assignTo="#{goodDetail.detailId}"></a4j:param>
+								<img id="sImgId" src="#{obj.picName}" height="100" width="100"  align="middle"
+								 style="border-width:0px;" />
+							</a4j:commandLink>
+							</a4j:region>
+							<h:panelGrid columns="1">						
+							<h:panelGrid columns="6">
+							
+							<h:outputLabel value="#{gmsg['main.goods.price']}" />
+							<h:outputText value="#{obj.price}">
+									<f:convertNumber pattern="$#####.##"></f:convertNumber>
+							</h:outputText>								
+							<h:outputText value="#{gmsg['main.goods.amount']}" />						
+							<h:panelGrid columns="2" >
+									<a4j:region>
+									<a4j:commandLink render="nuspId" 
+										oncomplete="#{rich:component('shoopingCarId')}.show(); return false;">
+										<a4j:param value="#{obj.id}" assignTo="#{shoppingCar.itemId}"></a4j:param>
+										<h:graphicImage library="img" name="scar.JPG" height="30" width="30" style="border-width:0px;" ></h:graphicImage>
+										<rich:tooltip>
+											<h:outputText value="#{gmsg['main.goods.shoppingcar']}"></h:outputText>
+										</rich:tooltip>
+									</a4j:commandLink>
+									</a4j:region>
+									<h:outputText value="#{shoppingCar.findAmountOfOrder(obj.id)}" />
+							</h:panelGrid>
+							<a4j:region rendered="${login.checkLogin()}">								
+							<a4j:commandLink render="storeGridId" execute="@region">
+								<a4j:param value="#{obj.id}" assignTo="#{goodDetail.removePersonal}"></a4j:param>
+								<a4j:actionListener listener="${personalList.store.remove(obj)}" />
+								<h:graphicImage library="img" name="removeperson.JPG" height="30" width="30" style="border-width:0px;"></h:graphicImage>
+								<rich:tooltip>
+									<h:outputText value="#{gmsg['main.goods.person.remove']}"></h:outputText>
+								</rich:tooltip>
+							</a4j:commandLink>						
+							</a4j:region>
+							
+							<h:outputText value=" "   rendered="${!login.checkLogin()}" />							
+							<h:outputText value=" "></h:outputText>
+							
+							</h:panelGrid>																	
+								<h:outputLabel value="#{gmsg['main.goods.name']}" for="name1Id" />
+								<h:outputText id="name1Id" value="#{obj.goodName}" escape="false" />																										
+								<h:outputLabel value="#{gmsg['main.goods.desc']}" for="desc1Id" />
+								<h:outputText id="desc1Id" value="#{obj.desc}" escape="false" />														
+							</h:panelGrid>
+						</h:panelGrid>
+					</rich:panel>
+					
+					<f:facet name="footer">
+						<rich:dataScroller renderIfSinglePage="false" />
+					</f:facet>
+				</rich:dataGrid>
+			</rich:panel>
+</rich:tab>
+<rich:tab header="#{gmsg['personallist.head.history']}">
+	 <rich:panel style="border:0;width:100%">
+				<rich:dataGrid value="#{personalList.history}" var="obj" columns="3" style="width:100%"
+					elements="9" id="dataGridId" rowKeyVar="rVar"
+					iterationStatusVar="isVar" stateVar="sVar">  
+						<rich:panel style="width:200 px; border:0;background-color: rgb(255, 255, 255);">
+						<f:facet name="header">
+							<h:outputText value="#{obj.title}" /> <h:outputText value="#{obj.id}"></h:outputText>
+						</f:facet>
+						<h:panelGrid columns="1">
+							<a4j:region>							
+							<a4j:commandLink render="popupId" execute="@region"
+								oncomplete="#{rich:component('popupId')}.show(); return false;">
+								<a4j:param value="#{obj.id}" assignTo="#{goodDetail.detailId}"></a4j:param>
+								<img id="pImgId" src="#{obj.picName}" height="100" width="100"  align="middle"
+								 style="border-width:0px;" />
+							</a4j:commandLink>
+							</a4j:region>
+							<h:panelGrid columns="1">						
+							<h:panelGrid columns="4">
+							<h:outputLabel value="#{gmsg['main.goods.price']}" />
+								<h:outputText value="#{obj.price}">
+									<f:convertNumber pattern="$#####.##"></f:convertNumber>
+								</h:outputText>								
+							<h:outputText value="#{gmsg['main.goods.amount']}" />						
+							<h:panelGrid columns="2" >
+									<a4j:region>
+									<a4j:commandLink render="nuspId" 
+										oncomplete="#{rich:component('shoopingCarId')}.show(); return false;">
+										<a4j:param value="#{obj.id}" assignTo="#{shoppingCar.itemId}"></a4j:param>
+										<h:graphicImage library="img" name="scar.JPG" height="30" width="30" style="border-width:0px;" ></h:graphicImage>
+										<rich:tooltip>
+											<h:outputText value="#{gmsg['main.goods.shoppingcar']}"></h:outputText>
+										</rich:tooltip>
+									</a4j:commandLink>
+									</a4j:region>
+									<h:outputText value="#{shoppingCar.findAmountOfOrder(obj.id)}" />
+							</h:panelGrid>
+							</h:panelGrid>																	
+								<h:outputLabel value="#{gmsg['main.goods.name']}" for="nameId" />
+								<h:outputText id="nameId" value="#{obj.goodName}" escape="false" />																										
+								<h:outputLabel value="#{gmsg['main.goods.desc']}" for="descId" />
+								<h:outputText id="descId" value="#{obj.desc}" escape="false" />														
+							</h:panelGrid>
+						</h:panelGrid>
+					</rich:panel>
+					
+					<f:facet name="footer">
+						<rich:dataScroller renderIfSinglePage="false" />
+					</f:facet>
+				</rich:dataGrid>
+			</rich:panel>
+</rich:tab>
+</rich:tabPanel>
+</h:form>
+</td></tr></table>		
+		<rich:popupPanel id="popupId" modal="true" autosized="true"
+			onmaskclick="#{rich:component('popupId')}.hide()">
+			<f:facet name="header">
+				<h:outputText value=" " />
+			</f:facet>
+			<f:facet name="controls">
+				<a4j:commandButton value="X"
+					onclick="#{rich:component('popupId')}.hide(); return false;"></a4j:commandButton>
+			</f:facet>
+			<h:panelGroup>
+				<h:panelGrid columns="2">
+					<img src="#{goodDetail.picName01}" height="350" width="350" />
+					<img src="#{goodDetail.picName02}" height="350" width="350" />
+				</h:panelGrid>
+				<rich:panel rendered="#{goodDetail.externalPage.length()>0}">
+					<h:button value="#{gmsg['main.goods.externalpage']}"
+						onclick="window.open('#{goodDetail.externalPage}')"></h:button>
+				</rich:panel>
+			</h:panelGroup>
+		</rich:popupPanel>
+		
+				<rich:popupPanel id="shoopingCarId"
+			onmaskclick="#{rich:component('shoopingCarId')}.hide()" modal="true"
+			autosized="true" keepVisualState="true">
+			<f:facet name="header">
+				<h:outputText value="#{gmsg['main.change.deader']}" />
+			</f:facet>
+			<h:form>
+				<h:panelGrid border="1" columns="2">
+					<rich:inputNumberSpinner id="nuspId"
+						value="#{shoppingCar.amountOfItem}" maxValue="30" minValue="0"></rich:inputNumberSpinner>
+					<a4j:commandButton type="button" value="#{gmsg['main.change.enter']}" execute="nuspId" style="font-size:20px"
+						render="nuspId,dataGridId,storeGridId"
+						oncomplete="#{rich:component('shoopingCarId')}.hide(); return false;">
+					</a4j:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</rich:popupPanel>
+
+</ui:define>
+</ui:composition>
+</html>

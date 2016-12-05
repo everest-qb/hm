@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">
+		<table width="100%">
+			<tr align="center">
+				<td width="70%"><h:form id="formId">
+						<rich:panel style="width:100%">
+							<f:facet name="header">
+								<h:outputText value="#{gmsg['shoppingcar.manager.header']}"></h:outputText>
+							</f:facet>
+							<rich:dataTable id="datableId" style="width:100%"
+								noDataLabel="#{gmsg['shoppingcar.manager.nodata']}"
+								value="#{shoppingCar.orders.keySet().toArray()}" var="k">
+
+								<f:facet name="header">
+									<rich:columnGroup>
+										<rich:column>
+											<h:outputText value="#{gmsg['shoppingcar.manager.colunm1']}"></h:outputText>
+										</rich:column>
+										<rich:column>
+											<h:outputText value="#{gmsg['shoppingcar.manager.colunm2']}"></h:outputText>
+										</rich:column>
+										<rich:column>
+											<h:outputText value="#{gmsg['shoppingcar.manager.colunm3']}"></h:outputText>
+										</rich:column>
+										<rich:column>
+											<h:outputText value="#{gmsg['shoppingcar.manager.price']}"></h:outputText>
+										</rich:column>
+										<rich:column>
+											<h:outputText value=" "></h:outputText>
+										</rich:column>
+									</rich:columnGroup>
+								</f:facet>
+								<rich:column>
+									<img src="#{shoppingCar.goodsInfo[k].picName}" width="80"
+										height="80" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{shoppingCar.goodsInfo[k].goodName}" />
+								</rich:column>
+
+								<rich:column>
+									<rich:inputNumberSpinner id="nuId" inputSize="2"
+										value="#{shoppingCar.orders[k]}" enableManualInput="true"
+										maxValue="30" minValue="1">
+										<f:converter converterId="javax.faces.Integer"></f:converter>
+									</rich:inputNumberSpinner>
+									<f:facet name="footer">
+										<h:outputText value="#{gmsg['shoppingcar.manager.total']}"></h:outputText>
+									</f:facet>
+								</rich:column>
+								<rich:column>
+
+									<h:outputText id="priceId" value="#{shoppingCar.findPrice(k)}">
+										<f:convertNumber pattern="$#####.##"></f:convertNumber>
+									</h:outputText>
+									<f:facet name="footer">
+										<h:outputText id="totalId"
+											value="#{shoppingCar.findTotalPrice()}">
+											<f:convertNumber pattern="$######.##"></f:convertNumber>
+										</h:outputText>
+									</f:facet>
+								</rich:column>
+								<rich:column>
+									<table>
+										<tr>
+											<td><a4j:commandButton type="button"
+													value="#{gmsg['shoppingcar.manager.modify']}"
+													execute="nuId" render="datableId">
+												</a4j:commandButton></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td><a4j:commandButton type="button"
+													value="#{gmsg['shoppingcar.manager.del']}"
+													render="datableId,formPanelId">
+													<a4j:actionListener listener="#{shoppingCar.delOrder(k)}"></a4j:actionListener>
+												</a4j:commandButton></td>
+										</tr>
+									</table>
+									<f:facet name="footer">
+										<a4j:commandButton type="button"
+											rendered="#{shoppingCar.orders.size()>10}"
+											value="#{gmsg['shoppingcar.manager.modifyall']}"
+											execute="@form" render="datableId">
+										</a4j:commandButton>
+									</f:facet>
+								</rich:column>
+								<ui:remove>
+									<f:facet name="footer">
+										<rich:columnGroup>
+											<rich:column colspan="3">
+												<h:outputText value="#{gmsg['shoppingcar.manager.total']}"></h:outputText>
+											</rich:column>
+											<rich:column>
+												<h:outputText value="#{shoppingCar.findTotalPrice()}">
+													<f:convertNumber pattern="$######.##"></f:convertNumber>
+												</h:outputText>
+											</rich:column>
+											<rich:column>
+												<h:outputText value=""></h:outputText>
+											</rich:column>
+										</rich:columnGroup>
+									</f:facet>
+								</ui:remove>
+							</rich:dataTable>
+						</rich:panel>
+					</h:form></td>
+				<td valign="top" align="center" width="30%">
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td><h:form id="formPanelId">
+									<rich:panel rendered="#{shoppingCar.orders.size()>0}">
+										<f:facet name="header">
+											<h:outputText
+												value="#{gmsg['shoppingcar.content.header.login']}"
+												rendered="#{login.checkLogin()}"></h:outputText>
+											<h:outputText
+												value="#{gmsg['shoppingcar.content.header.nonelogin']}"
+												rendered="#{!login.checkLogin()}"></h:outputText>
+										</f:facet>
+
+										<table width="100%">
+											<tr>
+												<td width="30%"><h:outputLabel
+														value="#{gmsg['shoppingcar.content.name']}"
+														rendered="#{login.checkLogin()}"></h:outputLabel> <h:outputLabel
+														value="#{gmsg['shoppingcar.content.tel']}"
+														rendered="#{!login.checkLogin()}"></h:outputLabel>:</td>
+												<td width="30%"><h:outputText
+														value="#{login.name}   #{shoppingCar.findMail()}"
+														rendered="#{login.checkLogin()}">
+													</h:outputText> <rich:autocomplete required="true" minChars="6"
+														mode="cachedAjax" value="#{shoppingCar.tel}"
+														requiredMessage="#{gmsg['shoppingcar.content.error.tel']}"
+														autocompleteMethod="#{shoppingCar.findAutocompleteTel}"
+														rendered="#{!login.checkLogin()}"
+														validatorMessage="#{gmsg['shoppingcar.content.error.validate.tel']}">
+														<f:validateRegex pattern="[0-9]{10}"></f:validateRegex>
+														<rich:validator></rich:validator>
+													</rich:autocomplete></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel
+														value="#{gmsg['shoppingcar.content.community']}"></h:outputLabel>:</td>
+												<td><rich:autocomplete minChars="2" mode="cachedAjax"
+														value="#{shoppingCar.communityName}" required="true"
+														requiredMessage="#{gmsg['shoppingcar.content.error.community']}"
+														autocompleteMethod="#{shoppingCar.findAutocompleteCommunity}">
+														<a4j:ajax event="selectitem" render="addressId"
+															execute="@this" listener="#{shoppingCar.guestAddress()}"></a4j:ajax>
+													</rich:autocomplete></td>
+											</tr>
+											<tr>
+												<td><h:outputLabel
+														value="#{gmsg['shoppingcar.content.address']}"></h:outputLabel>:</td>
+												<td><rich:autocomplete id="addressId" required="true"
+														requiredMessage="#{gmsg['shoppingcar.content.error.address']}"
+														minChars="6" value="#{shoppingCar.address}"
+														mode="cachedAjax"></rich:autocomplete></td>
+											</tr>
+											<tr>
+												<td colspan="2" align="right"><a4j:commandButton
+														action="#{shoppingCar.toPay()}" execute="@form"
+														value="#{gmsg['shoppingcar.content.pay']}"></a4j:commandButton>
+												</td>
+											</tr>
+										</table>
+
+										<rich:messages ajaxRendered="true"></rich:messages>
+									</rich:panel>
+								</h:form></td>
+						</tr>
+						<tr align="left">
+							<td><rich:panel header="說明">
+									<rich:list
+										value="#{globalVars.findExplainByType('shoppingcar.manage.explain')}"
+										var="explain" type="ordered">									
+										<h:outputText value="#{gmsg[explain]}"></h:outputText>
+									</rich:list>
+								</rich:panel></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="104,16,53,42" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="login::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="skin::#jsf#skin.xhtml" NAME="output1"
+    PATH="/jsf/skin.xhtml" TARGET="rules:#jsf#skin.xhtml" TITLE="skin" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="success:#{login1.check()}:#index.xhtml"
+    NAME="output2" PATH="/index.xhtml" TARGET="rules:#index.xhtml"
+    TITLE="#{login1.check()}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="manageGoods::#jsf#manageGoods.xhtml"
+    NAME="output3" PATH="/jsf/manageGoods.xhtml"
+    TARGET="rules:#jsf#manageGoods.xhtml" TITLE="manageGoods" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="sellAndAdvertise::#jsf#putForSell.xhtml"
+    NAME="output4" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml" TITLE="sellAndAdvertise" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="manageOrders::#jsf#manageOrders.xhtml"
+    NAME="output5" PATH="/jsf/manageOrders.xhtml"
+    TARGET="rules:#jsf#manageOrders.xhtml" TITLE="manageOrders" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="32,129,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#jsf#skin.xhtml" PATH="/jsf/skin.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#jsf#manageGoods.xhtml"
+  PATH="/jsf/manageGoods.xhtml" SHAPE="80,1265,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#jsf#manageGoods.xhtml:0" NAME="item"
+   PATH="/jsf/manageGoods.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="returnManage:#{manageGoods1.addNewGoods()}:#jsf#manageGoods.xhtml"
+    NAME="output" PATH="/jsf/manageGoods.xhtml"
+    TARGET="rules:#jsf#manageGoods.xhtml"
+    TITLE="#{manageGoods1.addNewGoods()}:returnManage" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="searchReturn:#{manageGoods1.searchGoods()}:#jsf#manageGoods.xhtml"
+    NAME="output1" PATH="/jsf/manageGoods.xhtml"
+    TARGET="rules:#jsf#manageGoods.xhtml"
+    TITLE="#{manageGoods1.searchGoods()}:searchReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="modifyReturn:#{manageGoods1.modifyGoods()}:#jsf#manageGoods.xhtml"
+    NAME="output2" PATH="/jsf/manageGoods.xhtml"
+    TARGET="rules:#jsf#manageGoods.xhtml"
+    TITLE="#{manageGoods1.modifyGoods()}:modifyReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="generateGoodsIdReturn:#{manageGoods1.generateGoodsId()}:#jsf#manageGoods.xhtml"
+    NAME="output3" PATH="/jsf/manageGoods.xhtml"
+    TARGET="rules:#jsf#manageGoods.xhtml"
+    TITLE="#{manageGoods1.generateGoodsId()}:generateGoodsIdReturn" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#jsf#putForSell.xhtml"
+  PATH="/jsf/putForSell.xhtml" SHAPE="32,273,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#jsf#putForSell.xhtml:0" NAME="item"
+   PATH="/jsf/putForSell.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="newAdvertiseReturn:#{manageList1.addNewAdvertise()}:#jsf#putForSell.xhtml"
+    NAME="output" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageList1.addNewAdvertise()}:newAdvertiseReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="searchAdReturn:#{manageList1.findAdvertisement()}:#jsf#putForSell.xhtml"
+    NAME="output1" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageList1.findAdvertisement()}:searchAdReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="updateAdReturn:#{manageList1.updateAdvertise()}:#jsf#putForSell.xhtml"
+    NAME="output2" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageList1.updateAdvertise()}:updateAdReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="loadImgReturn:#{manageList1.loadmage()}:#jsf#putForSell.xhtml"
+    NAME="output3" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageList1.loadmage()}:loadImgReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="delAdReturn:#{manageList1.delAdvertiseMent()}:#jsf#putForSell.xhtml"
+    NAME="output4" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageList1.delAdvertiseMent()}:delAdReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="addMapReturn:#{manageCategory1.addMap()}:#jsf#putForSell.xhtml"
+    NAME="output5" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageCategory1.addMap()}:addMapReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="delMapReturn:#{manageCategory1.delMap()}:#jsf#putForSell.xhtml"
+    NAME="output6" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageCategory1.delMap()}:delMapReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="loadImgReturn:#{manageCategory1.loadmage()}:#jsf#putForSell.xhtml"
+    NAME="output7" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{manageCategory1.loadmage()}:loadImgReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="addnewReturn:#{toClass1.addNew()}:#jsf#putForSell.xhtml"
+    NAME="output8" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{toClass1.addNew()}:addnewReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="searchItemReturn:#{toClass1.SearchItemByIdOfKind()}:#jsf#putForSell.xhtml"
+    NAME="output9" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{toClass1.SearchItemByIdOfKind()}:searchItemReturn" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="updateKindReturn:#{toClass1.updateKind()}:#jsf#putForSell.xhtml"
+    NAME="output10" PATH="/jsf/putForSell.xhtml"
+    TARGET="rules:#jsf#putForSell.xhtml"
+    TITLE="#{toClass1.updateKind()}:updateKindReturn" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#jsf#manageOrders.xhtml"
+  PATH="/jsf/manageOrders.xhtml" SHAPE="368,305,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

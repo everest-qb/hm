@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">
+		<table align="center" width="30%">
+			<tr>
+				<td><h:form>
+						<rich:panel>
+							<f:facet name="header">
+								<h:outputText value="#{gmsg['register.weelcome']}" rendered="#{!member.changed}"></h:outputText>
+								<h:outputText value="#{gmsg['member.modified']}" rendered="#{member.changed}"></h:outputText>
+							</f:facet>
+							<table width="100%">
+								<tr>
+									<td><h:outputLabel value="#{gmsg['register.name']}"></h:outputLabel></td>
+									<td>
+									<h:outputText value="#{login.name}" />									
+									</td>									
+								</tr>
+								<tr>
+									<td><h:outputLabel value="#{gmsg['register.password']}"></h:outputLabel></td>
+									<td><h:inputSecret id="passwordId" required="true" redisplay="true"
+											validatorMessage="#{gmsg['register.error.password']}"
+											label="#{gmsg['register.password']}"
+											value="#{member.password}">
+											<f:validateRegex
+												pattern="((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=[\S]+$).{8,15})"></f:validateRegex>
+											<rich:validator></rich:validator>
+										</h:inputSecret>										
+										</td>
+								</tr>							
+								<tr>
+									<td><h:outputLabel value="#{gmsg['register.tel']}"></h:outputLabel></td>
+									<td><h:inputText value="#{member.tel}"
+											label="#{gmsg['register.tel']}"
+											validatorMessage="#{gmsg['register.error.tel']}">
+											<f:validateRegex pattern="[0-9]{10}"></f:validateRegex>
+											<rich:validator></rich:validator>
+										</h:inputText></td>
+								</tr>
+								<tr>
+									<td><h:outputLabel value="#{gmsg['register.mail']}"></h:outputLabel></td>
+									<td><h:inputText value="#{member.mail}"
+											label="#{gmsg['register.mail']}"
+											validatorMessage="#{gmsg['register.error.mail']}">
+											<f:validateRegex
+												pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$|^$"></f:validateRegex>
+											<rich:validator />
+										</h:inputText></td>
+								</tr>								
+								<tr>
+									<td colspan="2" align="right"><a4j:commandButton render="@form"
+											value="#{gmsg['register.enter']}"
+											action="#{member.toChange()}"></a4j:commandButton></td>
+									<td>&nbsp;&nbsp;</td>
+								</tr>
+							</table>
+						</rich:panel>
+					</h:form></td>
+			</tr>
+			<tr>
+			<td><rich:messages ajaxRendered="true" /></td>
+			</tr>
+		</table>
+
+	</ui:define>
+</ui:composition>
+</html>

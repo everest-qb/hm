@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">
+		<h:form>
+			<table width="100%">
+				<tr>
+					<td><rich:tabPanel switchType="client">
+							<rich:tab header="#{gmsg['managegoods.add']}">
+								<rich:panel>
+									<a4j:region>
+										<table width="100%" align="center">
+											<tr>
+												<td>
+												<table cellpadding="0" cellspacing="0"><tr><td>
+												<h:outputLabel
+														value="#{gmsg['managegoods.new.id']}" for="new1"></h:outputLabel>
+													<h:inputText id="new1" maxlength="14" size="14"
+														value="#{manageGoods1.item.id}">
+														<f:validateRegex
+															pattern="[0-9][0-9][0-9][0-9][0-9][0-9]20[1-3][0-9][0-2][0-9][0-5][0-9]"></f:validateRegex>
+														<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+													</h:inputText>
+													</td><td>
+													<rich:select id="supplySelectId" value="#{manageGoods1.supplyerId}" onselectitem="supplier()">
+														<f:selectItems value="#{manageGoods1.findAllSupplier()}" var="s"
+														 itemLabel="#{s.name}" itemValue="#{s.id}"></f:selectItems>
+													</rich:select>	
+													</td></tr></table>
+													
+													<a4j:jsFunction name="supplier" execute="supplySelectId" render="new1" 
+													 action="#{manageGoods1.generateGoodsId()}">					
+													</a4j:jsFunction></td>
+												<td><h:outputLabel
+														value="#{gmsg['managegoods.new.name']}" for="new2"></h:outputLabel>
+													<h:inputText id="new2" value="#{manageGoods1.item.goodName}">
+														<f:validateLength minimum="3" maximum="50"></f:validateLength>
+														<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+													</h:inputText></td>
+												<td><h:outputLabel
+														value="#{gmsg['managegoods.new.price']}" for="new3"></h:outputLabel>
+													<rich:inputNumberSpinner id="new3"
+														value="#{manageGoods1.item.price}">
+														<f:validateLongRange minimum="5" maximum="100000"></f:validateLongRange>
+														<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+													</rich:inputNumberSpinner></td>
+											</tr>
+											<tr>
+												<td colspan="3"><h:outputLabel
+														value="#{gmsg['managegoods.new.icon']}" for="new4"></h:outputLabel>
+													<h:inputText id="new4" size="150" maxlength="256"
+														value="#{manageGoods1.item.picName}">
+														<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+													</h:inputText></td>
+											</tr>
+											<tr>
+												<td colspan="3"><h:outputLabel
+														value="#{gmsg['managegoods.new.link']}" for="new5"></h:outputLabel>
+													<h:inputText id="new5" size="150" maxlength="256"
+														value="#{manageGoods1.detail.externalPage}">
+
+													</h:inputText></td>
+											</tr>
+											<tr>
+												<td colspan="3"><h:outputLabel
+														value="#{gmsg['managegoods.new.pic01']}" for="new6"></h:outputLabel>
+													<h:inputText id="new6" size="150" maxlength="256"
+														value="#{manageGoods1.detail.picName01}">
+														<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+													</h:inputText></td>
+											</tr>
+											<tr>
+												<td colspan="3"><h:outputLabel
+														value="#{gmsg['managegoods.new.pic02']}" for="new7"></h:outputLabel>
+													<h:inputText id="new7" size="150" maxlength="256"
+														value="#{manageGoods1.detail.picName02}">
+														<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+													</h:inputText></td>
+											</tr>
+											<tr>
+												<td colspan="3"><h:outputLabel
+														value="#{gmsg['managegoods.new.desc']}" for="new8"></h:outputLabel>
+													<rich:editor toolbar="full" id="new8"
+														value="#{manageGoods.item.desc}"></rich:editor></td>
+											</tr>
+											<tr>
+												<td colspan="3" align="right"><a4j:commandButton
+														value="#{gmsg['managegoods.mew.submit']}"
+														execute="@region" action="#{manageGoods1.addNewGoods()}"></a4j:commandButton>
+												</td>
+											</tr>
+										</table>
+									</a4j:region>
+								</rich:panel>
+							</rich:tab>
+							<rich:tab header="#{gmsg['managegoods.update']}">
+								<rich:panel id="modifyPanelId">
+									<table>
+										<tr>
+											<td>
+												<table align="center" width="300">
+													<tr>
+														<td><h:outputLabel
+																value="#{gmsg['managegoods.modify.searchid']}"
+																for="modify1"></h:outputLabel></td>
+														<td><rich:autocomplete id="modify1" mode="cachedAjax"
+																minChars="3"
+																autocompleteMethod="#{manageGoods1.findAutoGoodsId}"
+																value="#{manageGoods1.searchGoodsId}"></rich:autocomplete>
+														</td>
+														<td><a4j:commandButton
+																value="#{gmsg['managegoods.modify.search']}"
+																type="button" action="#{manageGoods1.searchGoods()}"
+																execute="modify1" render="modifyPanelId"></a4j:commandButton>
+														</td>
+													</tr>
+												</table>
+
+											</td>
+										</tr>
+										<tr>
+											<td><a4j:region>
+													<table width="100%">
+														<tr>
+															<td><h:outputLabel
+																	value="#{gmsg['managegoods.new.id']}" for="modify2"></h:outputLabel>
+																<h:inputText id="modify2" value="#{manageGoods1.item.id}"
+																	readonly="true"></h:inputText>
+																<h:inputHidden value="#{manageGoods1.item.id}"></h:inputHidden></td>
+															<td><h:outputLabel
+																	value="#{gmsg['managegoods.new.name']}" for="modify3"></h:outputLabel>
+																<h:inputText id="modify3"
+																	value="#{manageGoods1.item.goodName}">
+																	<f:validateLength minimum="3" maximum="50"></f:validateLength>
+																	<f:validateRequired></f:validateRequired>
+																	<rich:validator></rich:validator>
+																</h:inputText></td>
+															<td><h:outputLabel
+																	value="#{gmsg['managegoods.new.price']}" for="modify4"></h:outputLabel>
+																<rich:inputNumberSpinner id="modify4"
+																	value="#{manageGoods1.item.price}">
+																	<f:validateLongRange minimum="5" maximum="100000"></f:validateLongRange>
+																	<f:validateRequired></f:validateRequired>
+																	<rich:validator></rich:validator>
+																</rich:inputNumberSpinner></td>
+														</tr>
+														<tr>
+															<td colspan="3"><h:outputLabel
+																	value="#{gmsg['managegoods.new.icon']}" for="modify5"></h:outputLabel>
+																<h:inputText id="modify5" size="150" maxlength="256"
+																	value="#{manageGoods1.item.picName}">
+																	<f:validateRequired></f:validateRequired>
+																	<rich:validator></rich:validator>
+																</h:inputText></td>
+														</tr>
+														<tr>
+															<td colspan="3"><h:outputLabel
+																	value="#{gmsg['managegoods.new.link']}" for="modify6"></h:outputLabel>
+																<h:inputText id="modify6" size="150" maxlength="256"
+																	value="#{manageGoods1.detail.externalPage}"></h:inputText>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="3"><h:outputLabel
+																	value="#{gmsg['managegoods.new.pic01']}" for="modify7"></h:outputLabel>
+																<h:inputText id="modify7" size="150" maxlength="256"
+																	value="#{manageGoods1.detail.picName01}">
+																	<f:validateRequired></f:validateRequired>
+																	<rich:validator></rich:validator>
+																</h:inputText></td>
+														</tr>
+														<tr>
+															<td colspan="3"><h:outputLabel
+																	value="#{gmsg['managegoods.new.pic02']}" for="modify8"></h:outputLabel>
+																<h:inputText id="modify8" size="150" maxlength="256"
+																	value="#{manageGoods1.detail.picName02}">
+																	<f:validateRequired></f:validateRequired>
+																	<rich:validator></rich:validator>
+																</h:inputText></td>
+														</tr>
+														<tr>
+															<td colspan="3"><h:outputLabel
+																	value="#{gmsg['managegoods.new.desc']}" for="modify9"></h:outputLabel>
+																<rich:editor toolbar="full" id="modify9"
+																	value="#{manageGoods1.item.desc}"></rich:editor></td>
+														</tr>
+														<tr>
+															<td align="right" colspan="3"><a4j:commandButton
+																	action="#{manageGoods1.modifyGoods()}"
+																	value="#{gmsg['managegoods.modify.submit']}"
+																	execute="@region" render="modifyPanelId"></a4j:commandButton>
+															</td>
+														</tr>
+													</table>
+												</a4j:region></td>
+										</tr>
+									</table>
+								</rich:panel>
+
+							</rich:tab>
+						</rich:tabPanel></td>
+				</tr>
+			</table>
+			<rich:notifyMessages stayTime="10000" showCloseButton="true" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

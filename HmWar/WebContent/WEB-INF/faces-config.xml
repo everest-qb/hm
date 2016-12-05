@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+ <navigation-rule>
+  <display-name>login</display-name>
+  <from-view-id>/index.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>toGoods</from-outcome>
+   <to-view-id>/jsf/main.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <display-name>main</display-name>
+  <from-view-id>/jsf/main.xhtml</from-view-id>
+ </navigation-rule>
+ <navigation-rule>
+  <display-name>manager car</display-name>
+  <from-view-id>/jsf/shoppingCarManager.xhtml</from-view-id>
+ </navigation-rule>
+ <navigation-rule>
+  <display-name>Header</display-name>
+  <from-view-id>*</from-view-id>
+  <navigation-case>
+   <from-action>#{login.check()}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/jsf/main.xhtml</to-view-id>
+   <redirect include-view-params="false"/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>managerCar</from-outcome>
+   <to-view-id>/jsf/shoppingCarManager.xhtml</to-view-id>
+   <redirect include-view-params="false"/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>toMain</from-outcome>
+   <to-view-id>/jsf/main.xhtml</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>login</from-outcome>
+   <to-view-id>/index.xhtml</to-view-id>
+   <redirect include-view-params="false"/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>orderManage</from-outcome>
+   <to-view-id>/jsf/orderManage.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>memberManage</from-outcome>
+   <to-view-id>/jsf/member.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>register</from-outcome>
+   <to-view-id>/jsf/register.xhtml</to-view-id>
+   <redirect include-view-params="false"/>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{login.check()}</from-action>
+   <from-outcome>register</from-outcome>
+   <to-view-id>/jsf/register.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>about</from-outcome>
+   <to-view-id>/jsf/about.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>contact</from-outcome>
+   <to-view-id>/jsf/contact.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>toPersonal</from-outcome>
+   <to-view-id>/jsf/personalList.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/jsf/contact.xhtml</from-view-id>
+  <navigation-case>
+   <from-action>#{contact.toSendMail()}</from-action>
+   <from-outcome>sendMailReturn</from-outcome>
+   <to-view-id>/jsf/contact.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/jsf/member.xhtml</from-view-id>
+  <navigation-case>
+   <from-action>#{member.toChange()}</from-action>
+   <from-outcome>returnChange</from-outcome>
+   <to-view-id>/jsf/member.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <application>
+  <locale-config>
+   <default-locale>zh_TW</default-locale>
+   <supported-locale>zh_TW</supported-locale>
+   <supported-locale>en_US</supported-locale>
+   <supported-locale>zh_CN</supported-locale>
+  </locale-config>
+  <resource-bundle>
+   <base-name>tw.housemart.gmsg.gmsg</base-name>
+   <var>gmsg</var>
+  </resource-bundle>
+ </application>
+ <factory>
+  <exception-handler-factory>tw.housemart.exception.JsfExceptionFactory</exception-handler-factory>
+ </factory>
+</faces-config>

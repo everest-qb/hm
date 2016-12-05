@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">
+		<table align="center" width="100%">
+			<tr>
+				<td width="50%"><h:form>
+						<rich:dataTable value="#{orderManage.orderList}" var="order"
+							iterationStatusVar="itVar" noDataLabel="#{gmsg['ordermanage.manage.nodata']}"
+							style="width:100%;align:center">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column colspan="3">
+										<h:outputText value="#{gmsg['ordermanage.manage.header']}"></h:outputText>
+									</rich:column>
+									<rich:column breakRowBefore="true">
+										<h:outputText value="#{gmsg['ordermanage.manage.name']}"></h:outputText>
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{gmsg['ordermanage.manage.amount']}"></h:outputText>
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{gmsg['ordermanage.manage.price']}"></h:outputText>
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+
+							<rich:column colspan="3">
+								<table width="100%">
+									<tr>
+										<td><rich:collapsibleSubTableToggler for="detailTableId"></rich:collapsibleSubTableToggler>
+											<h:outputText value="#{order.createT}" style="color:green">
+												<f:convertDateTime type="both" dateStyle="full" timeZone="Asia/Taipei"></f:convertDateTime>
+											</h:outputText> &nbsp;&nbsp;(<h:outputText
+												value="#{gmsg[globalVars.findOrderStatusMap(order.status)]}"></h:outputText>)
+										</td>
+										<td align="right"><a4j:commandButton
+												value="#{gmsg['ordermanage.manage.drop']}"
+												action="orderManage" rendered="#{order.status ge 0 and order.status le 127}">
+												<a4j:param value="#{order.id}"
+													assignTo="#{orderManage.deleteId}"></a4j:param>
+												<a4j:actionListener listener="#{orderManage.delOrder}"></a4j:actionListener>
+												<rich:tooltip>
+													<h:outputText value="#{gmsg['ordermanage.manage.drop.tooltip']}"></h:outputText>
+												</rich:tooltip>
+											</a4j:commandButton></td>
+									</tr>
+								</table>
+							</rich:column>
+
+							<rich:collapsibleSubTable id="detailTableId"
+								expanded="#{itVar.index lt 2}" value="#{order.orderDetails}"
+								var="detail">
+								<rich:column>
+									<h:outputText value="#{detail.goods.name}"></h:outputText>
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{detail.amount}"></h:outputText>
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{detail.goods.price}"></h:outputText>
+								</rich:column>
+								<f:facet name="footer">
+									<h:outputLabel value="#{gmsg['ordermanage.manage.deliverlocation']}"></h:outputLabel>:
+					<h:outputText value="#{order.deliverLocation.address}" />
+								</f:facet>
+							</rich:collapsibleSubTable>
+						</rich:dataTable>
+					</h:form></td>
+				<td valign="top">
+					<table width="100%">
+						<tr>
+							<td><rich:panel style="width:100%">
+									<f:facet name="header">
+										<h:outputText value="#{gmsg['ordermanage.explain.header']}"></h:outputText>
+									</f:facet>
+									<rich:list value="#{globalVars.findExplainByType('order.manage.explain')}" var="explain" type="ordered">
+									<h:outputText value="#{gmsg[explain]}"></h:outputText>
+									</rich:list>
+								</rich:panel></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</ui:define>
+</ui:composition>
+</html>

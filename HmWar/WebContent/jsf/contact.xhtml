@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="body">		
+		<table width="100%">
+			<tr>
+				<td>				
+					<table  align="center" width="60%">
+						<tr>
+							<td height="400"><h:form>
+							<rich:messages ajaxRendered="true"></rich:messages>									
+									<rich:panel id="panelId">
+									<f:facet name="header" >
+									<h:outputText style="color:red" value="#{gmsg['contact.sended']}" rendered="#{contact.sended}"></h:outputText>
+									</f:facet>										
+										<table width="100%"><tr><td>
+										<h:outputLabel value="#{gmsg['contact.who']}" for="name"></h:outputLabel>
+										</td><td>
+										<h:inputText id="name"  value="#{contact.userName}" maxlength="50"
+										 requiredMessage="#{gmsg['contact.who.requiremessage']}"
+										> 
+														<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+										</h:inputText>
+										</td></tr>
+										<tr><td>
+										<h:outputLabel value="#{gmsg['contact.contacttype']}" for="contact"></h:outputLabel>
+										</td><td>
+										<h:inputText id="contact" value="#{contact.contactInfo}" maxlength="100" 
+										requiredMessage="#{gmsg['contact.contacttype.requiremessage']}">
+										<f:validateRequired></f:validateRequired>
+										<rich:validator></rich:validator>
+										</h:inputText>
+										</td></tr>
+										<tr><td colspan="2">
+										<h:outputLabel value="#{gmsg['contact.content']}" for="content"></h:outputLabel>
+										</td></tr>
+										<tr><td colspan="2">
+										<rich:editor id="content" value="#{contact.clontent}" 
+										requiredMessage="#{gmsg['contact.content.requiremessage']}">
+										<f:validateRequired></f:validateRequired>
+														<rich:validator></rich:validator>
+													</rich:editor>
+										</td></tr>
+										<tr><td colspan="2" align="right">
+										<a4j:commandButton value="#{gmsg['contact.send']}" action="#{contact.toSendMail()}" render="@form"
+										 onclick="#{rich:jQuery('panelId')}.hide()">												
+										</a4j:commandButton>
+										</td></tr></table>
+									
+								</rich:panel>
+									<a4j:status errorText="#{gmsg['contact.status.error']}">
+										<f:facet name="start">
+										<table align="center">
+										<tr><td>
+										<h:outputText value="#{gmsg['contact.status.strat']}"></h:outputText>
+													</td></tr>
+										</table>
+										</f:facet>
+									</a4j:status>
+								</h:form></td>
+						</tr>
+					</table>
+			
+				</td>
+			</tr>
+		</table>
+	</ui:define>
+</ui:composition>
+</html>

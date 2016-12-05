@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title><ui:insert name="title">
+			<h:outputText value="#{gmsg['template.title']}"></h:outputText>
+		</ui:insert></title>
+</h:head>
+<h:body>
+	<table align="center" cellpadding="0" cellspacing="0" border="0"
+		width="1024px">
+		<tbody>			
+			<tr>
+				<td height="42" align="center" valign="middle" width="100%"><ui:insert
+						name="header">
+						<rich:toolbar height="40" width="100%" itemSeparator="line">							
+							<rich:toolbarGroup rendered="#{login1.chkAdmin()}">
+								<h:form>
+									<rich:dropDownMenu >
+										<f:facet name="label">
+										<a4j:commandButton value="#{gmsg['head.admin']}"
+										type="button"></a4j:commandButton>
+										</f:facet>
+										<rich:menuItem label="#{gmsg['head.admin.skin']}" action="skin"></rich:menuItem>
+										<rich:menuItem label="#{gmsg['head.admin.Goods']}" action="manageGoods"></rich:menuItem>
+										<rich:menuItem label="#{gmsg['head.admin.putforsell']}" action="sellAndAdvertise"></rich:menuItem>
+										<rich:menuItem label="#{gmsg['head.admin.orders']}" action="manageOrders"></rich:menuItem>
+									</rich:dropDownMenu>									
+								</h:form>
+							</rich:toolbarGroup>
+							
+							<rich:toolbarGroup location="right">
+								<h:outputText value=" "></h:outputText>								
+								<h:form rendered="#{login1.checkLogin()}">
+								<table cellpadding="0" cellspacing="0">
+								<tr>
+								<td><h:outputText value="#{gmsg['head.welcome']}, #{login1.name}"></h:outputText></td>
+								<td>
+									<a4j:commandButton value="#{gmsg['head.logout']}" type="button"
+										action="#{login1.logout()}"></a4j:commandButton>
+								</td>
+								</tr>
+								</table>		
+								</h:form>
+								<h:form>
+									<a4j:region rendered="#{!login1.checkLogin()}">
+										<table border="0" cellpadding="1" cellspacing="1">
+											<tr>
+												<td><h:outputLabel for="nameId"
+														value="#{gmsg['head.login.name']}"></h:outputLabel> <h:inputText
+														id="nameId" value="#{login1.name}"
+														label="#{gmsg['head.login.name']}" required="true"
+														size="6">
+													</h:inputText> <rich:notifyMessage stayTime="2000" for="nameId"></rich:notifyMessage>
+												</td>
+												<td><h:outputLabel
+														value="#{gmsg['head.login.password']}"></h:outputLabel> <h:inputSecret
+														value="#{login1.password}" size="6"></h:inputSecret></td>
+												<td><a4j:commandButton id="loginId" execute="@region"
+														value="#{gmsg['head.login']}" action="#{login1.check()}">
+													</a4j:commandButton> <rich:notifyMessage stayTime="2000" for="loginId"></rich:notifyMessage>
+												</td>
+											</tr>
+										</table>
+									</a4j:region>
+								</h:form>
+							</rich:toolbarGroup>
+						</rich:toolbar>
+
+
+					</ui:insert></td>
+			</tr>
+			<tr>
+				<td><ui:insert name="body">Empty</ui:insert></td>
+			</tr>
+
+			<tr>
+				<td valign="bottom" height="20" width="100%"><ui:insert
+						name="footer">
+						<rich:panel header="#{gmsg['footer.copyright']}"
+							style="width:100%"></rich:panel>
+					</ui:insert></td>
+			</tr>
+			<tr>
+				<td><a4j:log mode="popup" rendered="#{globalVars1.jsfDebug}"></a4j:log></td>
+			</tr>
+		</tbody>
+	</table>
+	<ui:debug hotkey="b" rendered="#{globalVars1.jsfDebug}"></ui:debug>
+</h:body>
+
+</html>
